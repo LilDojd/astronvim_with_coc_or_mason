@@ -18,5 +18,5 @@ vim.opt.scrolloff = 5 -- keep 3 lines when scrolling
 vim.g.mapleader = " "
 vim.g.maplocalleader = ""
 vim.g.resession_enabled = true
-vim.g.autoformat = true
-vim.g.autoformat_enabled = true
+vim.g.autoformat = false
+vim.g.autoformat_enabled = false
