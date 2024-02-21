@@ -14,14 +14,7 @@ return {
     -- Configuration options for controlling formatting with language servers
     formatting = {
       -- control auto formatting on save
-      format_on_save = {
-        -- enable or disable format on save globally
-        enabled = true,
-        -- enable format on save for specified filetypes only
-        allow_filetypes = {},
-        -- disable format on save for specified filetypes
-        ignore_filetypes = {},
-      },
+      format_on_save = false,
       -- disable formatting capabilities for specific language servers
       disabled = {},
       -- default format timeout
