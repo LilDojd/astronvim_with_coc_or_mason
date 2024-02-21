@@ -27,9 +27,15 @@ return {
     "AstroNvim/astrolsp",
     opts = {
       handlers = { rust_analyzer = false },
+
+
       config = {
         rust_analyzer = {
-          on_attach = function()
+          on_attach = function(client, bufnr)
+            require("lsp-inlayhints").on_attach(client, bufnr)
+            -- add a keymap to toggle inlay hints
+            
+
             vim.api.nvim_create_autocmd({ "TermClose", "BufEnter" }, {
               pattern = "*cargo run*",
               desc = "Jump to error line",
@@ -100,8 +106,13 @@ return {
   },
   {
     "mrcjkb/rustaceanvim",
-    version = "^3",
+    version = "^4",
     ft = "rust",
+    dependencies = {
+      {
+        "lvimuser/lsp-inlayhints.nvim",
+      },
+    },
     opts = function()
       local adapter
       local success, package = pcall(function() return require("mason-registry").get_package "codelldb" end)
@@ -130,7 +141,9 @@ return {
         dap = { adapter = adapter },
       }
     end,
-    config = function(_, opts) vim.g.rustaceanvim = opts end,
+    config = function(_, opts)
+      vim.g.rustaceanvim = opts
+    end,
   },
   {
     "Saecki/crates.nvim",
