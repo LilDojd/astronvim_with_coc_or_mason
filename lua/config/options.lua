@@ -11,11 +11,11 @@ vim.opt.showtabline = (vim.t.bufs and #vim.t.bufs > 1) and 2 or 1
 vim.opt.spellfile = vim.fn.expand "~/.config/nvim/spell/en.utf-8.add"
 vim.opt.splitkeep = "screen"
 vim.opt.swapfile = false
-vim.opt.thesaurus = vim.fn.expand "~/.config/nvim/spell/mthesaur.txt"
+vim.opt.thesaurus = vim.fn.expand "~/.config/nvimf/spell/mthesaur.txt"
 vim.opt.wrap = true -- soft wrap lines
 vim.opt.scrolloff = 5 -- keep 3 lines when scrolling
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ""
 vim.g.resession_enabled = true
-vim.g.autoformat = false
+vim.g.autoformat = true

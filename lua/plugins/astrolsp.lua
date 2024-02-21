@@ -4,17 +4,24 @@ return {
   opts = {
     features = {
       -- Configuration table of features provided by AstroLSP
-      autoformat = false, -- enable or disable auto formatting on start
+      autoformat = true, -- enable or disable auto formatting on start
       codelens = true, -- enable/disable codelens refresh on start
       lsp_handlers = true, -- enable/disable setting of lsp_handlers
       semantic_tokens = true, -- enable/disable semantic token highlighting
-      inlay_hints = false,
+      inlay_hints = true,
       diagnostics_mode = 3,
     },
     -- Configuration options for controlling formatting with language servers
     formatting = {
       -- control auto formatting on save
-      format_on_save = false,
+      format_on_save = {
+        -- enable or disable format on save globally
+        enabled = true,
+        -- enable format on save for specified filetypes only
+        allow_filetypes = {},
+        -- disable format on save for specified filetypes
+        ignore_filetypes = {},
+      },
       -- disable formatting capabilities for specific language servers
       disabled = {},
       -- default format timeout
