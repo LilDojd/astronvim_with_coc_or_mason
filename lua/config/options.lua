@@ -19,3 +19,4 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ""
 vim.g.resession_enabled = true
 vim.g.autoformat = true
+vim.g.autoformat_enabled = true

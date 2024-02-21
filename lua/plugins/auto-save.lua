@@ -1,6 +1,6 @@
 return {
-  "chaozwn/auto-save.nvim",
-  event = { "User AstroFile", "InsertEnter" },
+  "pocco81/auto-save.nvim",
+  event = { "User AstroFile", "InsertLeave" },
   opts = {
     debounce_delay = 5000,
     print_enabled = false,
