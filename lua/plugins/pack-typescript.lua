@@ -47,7 +47,7 @@ return {
             tsserver_plugins = {
               "@styled/typescript-styled-plugin",
               "typescript-vue-plugin",
-              "vue-component-meta",
+              -- "vue-component-meta",
             },
             expose_as_code_action = "all",
           },
@@ -61,19 +61,22 @@ return {
     opts = function(_, opts)
       if opts.ensure_installed ~= "all" then
         opts.ensure_installed =
-          utils.list_insert_unique(opts.ensure_installed, "javascript", "typescript", "tsx", "jsdoc")
+          utils.list_insert_unique(opts.ensure_installed, { "javascript", "typescript", "tsx", "jsdoc" })
       end
     end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    opts = function(_, opts) opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, "tsserver") end,
+    opts = function(_, opts)
+      opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, { "tsserver", "eslint" })
+    end,
   },
   {
     "jay-babu/mason-null-ls.nvim",
     optional = true,
     opts = function(_, opts)
-      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, "prettierd", "eslint_d")
+      opts.ensure_installed =
+        require("astrocore").list_insert_unique(opts.ensure_installed, { "prettierd", "eslint-lsp" })
       if not opts.handlers then opts.handlers = {} end
 
       local has_prettier = function(util)
@@ -92,17 +95,6 @@ return {
           or util.root_has_file ".prettierrc.toml"
       end
 
-      local has_eslint = function(util) return util.root_has_file ".eslintrc.json" end
-
-      opts.handlers.eslint_d = function()
-        local null_ls = require "null-ls"
-        null_ls.register(null_ls.builtins.code_actions.eslint_d.with { condition = has_eslint })
-        null_ls.register(null_ls.builtins.diagnostics.eslint_d.with { condition = has_eslint })
-        null_ls.register(null_ls.builtins.formatting.eslint_d.with {
-          condition = function(util) return not has_prettier(util) and has_eslint(util) end,
-        })
-      end
-
       opts.handlers.prettierd = function()
         local null_ls = require "null-ls"
         null_ls.register(null_ls.builtins.formatting.prettierd.with { condition = has_prettier })
@@ -112,7 +104,7 @@ return {
   {
     "jay-babu/mason-nvim-dap.nvim",
     optional = true,
-    opts = function(_, opts) opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, "js") end,
+    opts = function(_, opts) opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, { "js" }) end,
   },
   {
     "vuki656/package-info.nvim",

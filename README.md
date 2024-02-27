@@ -91,6 +91,9 @@ nvim
 ```
 
 ## Tips
+### Use Lazygit
+`<leader>tl`
+
 ### Install unimatrix
 `<Leader>tm`
 ```shell
@@ -113,7 +116,6 @@ brew tap daipeihust/tap
 brew install im-select
 im-select
 ```
-
 copy result to `im-select.lua`
 
 ```lua
@@ -144,6 +146,12 @@ npm i -g vue-component-meta
 ```
 brew install neovide
 neovide .
+```
+
+### Support Lazydocker
+tigger command: `<leader>td`
+```shell
+brew install lazydocker
 ```
 
 

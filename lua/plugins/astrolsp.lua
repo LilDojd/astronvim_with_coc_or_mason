@@ -22,7 +22,7 @@ return {
     },
     capabilities = {
       workspace = {
-        didChangeWatchedFiles = { dynamicRegistration = true },
+        didChangeWatchedFiles = { dynamicRegistration = true, relativePatternSupport = true },
       },
     },
     diagnostics = {

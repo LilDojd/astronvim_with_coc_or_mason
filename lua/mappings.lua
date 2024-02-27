@@ -270,6 +270,7 @@ function M.mappings(maps)
       }
       maps.n["<Leader>gg"] = maps.n["<Leader>tl"]
     end
+
     if vim.fn.executable "yazi" == 1 then
       maps.n["<Leader>ty"] = {
         require("utils").toggle_yazi(),
@@ -283,6 +284,13 @@ function M.mappings(maps)
         desc = "ToggleTerm unimatrix",
       }
     end
+
+    if vim.fn.executable "lazydocker" == 1 then
+      maps.n["<Leader>td"] = {
+        require("utils").toggle_lazy_docker(),
+        desc = "ToggleTerm lazydocker"
+      }
+    end
   end
 
   -- 在visual mode 里粘贴不要复制
@@ -294,7 +302,7 @@ function M.mappings(maps)
   maps.n["<Leader>wc"] = { "<C-w>c", desc = "Close current screen" }
   maps.n["<Leader>wo"] = { "<C-w>o", desc = "Close other screen" }
   -- 多个窗口之间跳转
-  maps.n["<Leader>w="] = { "<C-w>=", desc = "Make all window equal" }
+  maps.n["<Leader>we"] = { "<C-w>=", desc = "Make all window equal" }
   maps.n["<TAB>"] =
     { function() require("astrocore.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end, desc = "Next buffer" }
   maps.n["<S-TAB>"] = {
