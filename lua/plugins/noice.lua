@@ -50,6 +50,15 @@ return {
           notify = {
             merge = true,
           },
+          cmdline_popup = {
+            border = {
+              style = "none",
+              padding = { 2, 3 },
+            },
+            win_options = {
+              winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+            },
+          },
         },
         routes = {
           { filter = { event = "notify", find = "No information available" }, opts = { skip = true } },
