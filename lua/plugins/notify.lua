@@ -4,9 +4,9 @@ return {
     stages = "slide",
     render = "default",
     max_width = "100",
-    minimum_wirdth = "50",
-    fps = 30,
+    minimum_width = "50",
+    fps = 60,
     level = 1,
-    timeout = 2000,
+    timeout = 5000,
   },
 }
