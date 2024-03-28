@@ -1,17 +1,14 @@
 return {
   {
-    "craftzdog/solarized-osaka.nvim",
+    "catppuccin/nvim",
     lazy = false,
     priority = 1000,
-    opts = {
-      transparent = false,
-    },
   },
   {
     "AstroNvim/astroui",
     ---@type AstroUIOpts
     opts = {
-      colorscheme = "solarized-osaka",
+      colorscheme = "catppuccin",
       highlights = {
         init = function()
           local get_hlgroup = require("astroui").get_hlgroup
