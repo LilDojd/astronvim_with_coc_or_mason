@@ -22,24 +22,8 @@ return {
     },
     capabilities = {
       workspace = {
-        didChangeWatchedFiles = { dynamicRegistration = true, relativePatternSupport = true },
+        didChangeWatchedFiles = { dynamicRegistration = true },
       },
-    },
-    diagnostics = {
-      underline = true,
-      virtual_text = {
-        spacing = 5,
-        severity_limit = "WARN",
-        severity = {
-          min = vim.diagnostic.severity.WARN,
-        },
-      },
-      signs = {
-        severity = {
-          min = vim.diagnostic.severity.WARN,
-        },
-      },
-      update_in_insert = false,
     },
     -- mappings to be set up on attaching of a language server
     mappings = {
