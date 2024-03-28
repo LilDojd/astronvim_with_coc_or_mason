@@ -17,15 +17,19 @@ return {
           },
         },
       },
-      handlers = {
-        tsserver = false, -- disable tsserver setup, this plugin does it
-      },
       config = {
         ["typescript-tools"] = { -- enable inlay hints by default for `typescript-tools`
+          filetypes = {
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
+          },
           settings = {
             separate_diagnostic_server = true,
-            -- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
-            -- memory limit in megabytes or "auto"(basically no limit)
+            complete_function_calls = true,
             tsserver_max_memory = "auto",
             code_lens = "all",
             tsserver_file_preferences = {
@@ -45,11 +49,14 @@ return {
               allowRenameOfImportPath = false,
             },
             tsserver_plugins = {
+              "@vue/typescript-plugin",
               "@styled/typescript-styled-plugin",
-              "typescript-vue-plugin",
-              -- "vue-component-meta",
             },
             expose_as_code_action = "all",
+            jsx_close_tag = {
+              enable = true,
+              filetypes = { "javascriptreact", "typescriptreact" },
+            },
           },
         },
       },
@@ -68,7 +75,7 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     opts = function(_, opts)
-      opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, { "tsserver", "eslint" })
+      opts.ensure_installed = utils.list_insert_unique(opts.ensure_installed, { "eslint", "tsserver" })
     end,
   },
   {
@@ -118,8 +125,7 @@ return {
       "nvim-lua/plenary.nvim",
       "neovim/nvim-lspconfig",
     },
-    -- enabled = function() return not require("utils").is_vue_project() end,
-    ft = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+    enabled = not require("utils").is_vue_project(),
     -- get AstroLSP provided options like `on_attach` and `capabilities`
     opts = function() return require("astrolsp").lsp_opts "typescript-tools" end,
   },
@@ -128,6 +134,7 @@ return {
     cmd = { "TSC" },
     opts = {},
   },
+  { "dmmulroy/ts-error-translator.nvim", opts = {}, ft = { "typescript", "vue" } },
   {
     "mfussenegger/nvim-dap",
     optional = true,

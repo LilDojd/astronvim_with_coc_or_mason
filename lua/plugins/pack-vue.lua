@@ -1,5 +1,14 @@
+local function get_npm_global_path()
+  local handle = io.popen "npm root -g"
+  local result = handle:read "*a"
+  handle:close()
+  -- 去除结果字符串末尾的换行符
+  result = string.gsub(result, "[\r\n]+$", "")
+  return result
+end
+
+-- TODO: forbid format in vue project and use prettier
 local is_vue_project = require("utils").is_vue_project()
---TODO: after yarn, diagnostic not refresh
 return {
   {
     ---@type LazySpec
@@ -7,58 +16,39 @@ return {
     ---@type AstroLSPOpts
     ---@diagnostic disable: missing-fields
     opts = function(_, opts)
-      local volar_handler = opts.handlers.volar
-      if not is_vue_project then volar_handler = false end
+      local tsserver_handler = opts.handlers.tsserver
+      if not is_vue_project then tsserver_handler = false end
       return require("astrocore").extend_tbl(opts, {
         handlers = {
-          volar = volar_handler,
+          tsserver = tsserver_handler,
         },
         config = {
-          volar = {
+          tsserver = {
+            filetypes = {
+              "javascript",
+              "javascriptreact",
+              "javascript.jsx",
+              "typescript",
+              "typescriptreact",
+              "typescript.tsx",
+              "vue",
+            },
+            init_options = {
+              hostInfo = "neovim",
+              plugins = {
+                {
+                  name = "@vue/typescript-plugin",
+                  location = get_npm_global_path() .. "/@vue/typescript-plugin",
+                  languages = {
+                    "typescript",
+                    "vue",
+                  },
+                },
+              },
+            },
             capabilities = {
               workspace = {
                 didChangeWatchedFiles = { dynamicRegistration = true },
-              },
-            },
-            init_options = {
-              languageFeatures = {
-                implementation = true, -- new in @volar/vue-language-server v0.33
-                references = true,
-                definition = true,
-                typeDefinition = true,
-                callHierarchy = true,
-                hover = true,
-                rename = true,
-                renameFileRefactoring = true,
-                signatureHelp = true,
-                codeAction = true,
-                workspaceSymbol = true,
-                completion = {
-                  defaultTagNameCase = "both",
-                  defaultAttrNameCase = "kebabCase",
-                  getDocumentNameCasesRequest = true,
-                  getDocumentSelectionRequest = true,
-                },
-                -- doc
-                documentHighlight = true,
-                documentLink = true,
-                codeLens = { showReferencesNotification = true },
-                -- not supported - https://github.com/neovim/neovim/pull/15723
-                semanticTokens = true,
-                diagnostics = true,
-                schemaRequestService = true,
-              },
-              -- html
-              documentFeatures = {
-                selectionRange = true,
-                foldingRange = true,
-                linkedEditingRange = true,
-                documentSymbol = true,
-                -- not supported - https://github.com/neovim/neovim/pull/13654
-                documentColor = true,
-                documentFormatting = {
-                  defaultPrintWidth = 100,
-                },
               },
             },
           },
